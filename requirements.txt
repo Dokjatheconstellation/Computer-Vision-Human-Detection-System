@@ -1,0 +1,6 @@
+# Age & Gender Detection Project
+# Install with: pip install -r requirements.txt
+
+opencv-python==4.12.0.88
+numpy==2.2.6
+imutils==0.5.4

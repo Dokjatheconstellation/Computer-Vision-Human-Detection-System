@@ -1,49 +1,58 @@
-# Computer Vision Human Detection System
+Age & Gender Detection Camera
+A real-time webcam app that detects faces and predicts the age and gender of each person using OpenCV and pre-trained Caffe models.
 
-A real-time physical security and surveillance application powered by edge-optimized computer vision. This project enhances traditional monitoring systems by automating human detection, reducing the need for constant manual oversight, and providing instantaneous alerting/tracking mechanisms for security applications and restricted area monitoring.
+How It Works
 
----
+Opens your webcam
+Detects faces using Haar Cascade (built into OpenCV)
+Passes each face to two pre-trained models — one for age, one for gender
+Draws a box around each face and labels it with the result
 
-## 🏗️ System Workflow
 
-The application operates as a high-throughput, low-latency loop processing video frames frame-by-frame:
+Project Structure
+Detection_cam/
+├── test.py                   # main script
+├── age_deploy.prototxt       # age model architecture
+├── age_net.caffemodel        # age model weights (~441 MB)
+├── gender_deploy.prototxt    # gender model architecture
+├── gender_net.caffemodel     # gender model weights (~441 MB)
+├── requirements.txt
+└── README.md
 
-1. **Video Stream Ingestion:** Captures live feeds from local webcams, IP security cameras (via RTSP streams), or pre-recorded video files.
-2. **Frame Resize & Normalization:** Standardizes resolution inputs to optimize processing throughput for the underlying network without dropping critical image data.
-3. **Model Inference:** Passes the frame through a deep learning object detection network to detect human presence and extract bounding box coordinates.
-4. **Post-Processing & Non-Maximum Suppression (NMS):** Filters out overlapping redundant bounding boxes, ensuring each individual is counted and highlighted exactly once.
-5. **Annotation & Rendering:** Draws bounding boxes, tracking markers, and real-time confidence metrics onto the live UI wrapper.
+Setup
+1. Clone or download the project
+2. Create and activate a virtual environment
+powershellpython -m venv .venv
+.venv\Scripts\activate
+3. Install dependencies
+powershellpip install -r requirements.txt
+4. Download the model files
+The .prototxt files (model architecture):
 
----
+age_deploy.prototxt
+gender_deploy.prototxt
 
-## 🛠️ Tech Stack
+The .caffemodel files (model weights) — download via terminal:
+powershellcurl -L -o age_net.caffemodel "https://github.com/GilLevi/AgeGenderDeepLearning/raw/master/age_net.caffemodel"
+curl -L -o gender_net.caffemodel "https://github.com/GilLevi/AgeGenderDeepLearning/raw/master/gender_net.caffemodel"
 
-* **Language:** Python 3.9+
-* **Core Frameworks:** OpenCV (Open Source Computer Vision Library)
-* **Inference Models:** YOLO (You Only Look Once) / SSD MobileNet *(Tip: Choose/Keep the one you used)*
-* **Data & Math Utilities:** NumPy
-* **Hardware Acceleration:** CUDA / cuDNN (Optional for GPU acceleration)
+Make sure all 4 files are in the same folder as test.py
 
----
 
-## 🌟 Key Features
+Run
+powershellpython test.py
+Press Q to quit the camera window.
 
-* **Real-Time Detection & Tracking:** Utilizes highly efficient object detection architectures to maintain stable tracking on human subjects with negligible latency.
-* **Smart Alerting Zones:** Engineered logic to draw customizable bounding zones (e.g., restricted red zones); triggers a console or log alert the moment a human boundary intersects with the region.
-* **Performance Optimization:** Implemented Non-Maximum Suppression and confidence threshold filtering to drastically minimize false positives from moving background shadows, foliage, or changes in indoor lighting.
-* **Dynamic Analytics:** Displays live analytics overlays directly onto the video feed, including the instantaneous total frame person count and model processing times.
+Requirements
+PackageVersionopencv-python4.12.0.88numpy2.2.6imutils0.5.4
+Python3.12
 
----
+Age & Gender Labels
+Age groups: (0-2) (4-6) (8-12) (15-20) (25-32) (38-43) (48-53) (60-100)
+Gender: Male / Female
 
-## 🚀 Getting Started
+Notes
 
-### Prerequisites
-* Python 3.9 or higher installed on your host machine.
-* A connected webcam or a valid local video file path for testing.
-
-### Installation
-
-1. **Clone the repository:**
-```bash
-   git clone [https://github.com/YOUR_USERNAME/human-detection-system.git](https://github.com/YOUR_USERNAME/human-detection-system.git)
-   cd human-detection-system
+Works best with good lighting and a front-facing camera
+Accuracy decreases if the face is at an angle or partially covered
+Models were trained on the Adience dataset

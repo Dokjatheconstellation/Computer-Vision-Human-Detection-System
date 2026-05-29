@@ -25,6 +25,7 @@ The application handles high-throughput, low-latency processing of video frames 
 * **Face Localizer:** Haar Cascade Classifier
 * **Data & Utilities:** NumPy (v2.2.6), Imutils (v0.5.4)
 * **Hardware Acceleration:** CUDA / cuDNN (Optional for GPU-backed real-time acceleration)
+* **NOTE:** this repository does not contain the dataset for the Project
 
 ### Library Specifications
 | Package | Version |

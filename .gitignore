@@ -1,0 +1,15 @@
+# --- Block Heavy Machine Learning Model Weights ---
+*.caffemodel
+
+# --- Block Python Runtime Cache ---
+__pycache__/
+*.pyc
+
+# --- Block Local Environments & Configs ---
+.venv/
+venv/
+.env
+
+# --- Block OS Trash Files ---
+.DS_Store
+Thumbs.db
